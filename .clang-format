@@ -1,0 +1,51 @@
+BasedOnStyle: WebKit
+
+TabWidth: 2
+IndentWidth: 2
+UseTab: Never
+
+AlignEscapedNewlines: DontAlign
+AlignTrailingComments: false
+AllowShortFunctionsOnASingleLine: None
+
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: "true"
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterObjCDeclaration: true
+  AfterStruct: true
+  AfterUnion: true
+  BeforeCatch: true
+  BeforeLambdaBody: true
+  BeforeElse: true
+  IndentBraces: false
+
+AccessModifierOffset: -2
+IndentPPDirectives: BeforeHash
+BreakBeforeBraces: Custom
+BreakConstructorInitializers: BeforeComma
+ColumnLimit: 160
+ConstructorInitializerIndentWidth: 2
+ContinuationIndentWidth: 2
+FixNamespaceComments: false
+IncludeBlocks: Regroup
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: All
+PointerAlignment: Left
+SortIncludes: true
+
+SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: false
+SpaceBeforeParens: ControlStatements
+SpacesInContainerLiterals: false
+SpaceBeforeCpp11BracedList: false
+
+PenaltyBreakAssignment: 1
+PenaltyBreakBeforeFirstCallParameter: 1
+PenaltyBreakComment: 1
+PenaltyBreakFirstLessLess: 1
+PenaltyBreakString: 1
+PenaltyExcessCharacter: 1
