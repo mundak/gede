@@ -232,10 +232,8 @@ Core::Core()
   GdbCom& com = GdbCom::getInstance();
   com.setListener(this);
 
-  m_ptsFd = openPseudoTerminal();
-
-  // TODO: mundak: fix
-  Q_ASSERT(false);
+  // TODO mundak: program output is not supported right now
+  // m_ptsFd = openPseudoTerminal();
   // infoMsg("Using: %s", ptsname(m_ptsFd));
 }
 
@@ -254,8 +252,7 @@ Core::~Core()
   GdbCom& com = GdbCom::getInstance();
   com.setListener(NULL);
 
-  // TODO: mundak: fix
-  Q_ASSERT(false);
+  // TODO mundak: program output is not supported right now
   // close(m_ptsFd);
 
   for (int m = 0; m < m_sourceFiles.size(); m++)
@@ -309,16 +306,13 @@ int Core::initPid(Settings* cfg, QString gdbPath, QString programPath, int pid)
     return -1;
   }
 
-  // TODO: mundak: fix
+  // TODO mundak: program output is not supported right now
   // QString ptsDevPath = ptsname(m_ptsFd);
-  QString ptsDevPath = "";
-  Q_ASSERT(false);
-
-  if (com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
-  {
-    rc = 1;
-    critMsg("Failed to set inferior tty");
-  }
+  //  if (com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
+  //  {
+  //    rc = 1;
+  //    critMsg("Failed to set inferior tty");
+  //  }
 
   if (com.commandF(&resultData, "-file-exec-and-symbols %s", stringToCStr(programPath)) == GDB_ERROR)
   {
@@ -385,16 +379,13 @@ int Core::initLocal(Settings* cfg, QString gdbPath, QString programPath, QString
     return -1;
   }
 
-  // TODO: mundak: fix
-  Q_ASSERT(false);
+  // TODO mundak: program output is not supported right now
   // QString ptsDevPath = ptsname(m_ptsFd);
-  QString ptsDevPath = "";
-
-  if (com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
-  {
-    rc = 1;
-    critMsg("Failed to set inferior tty");
-  }
+  //  if (com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
+  //  {
+  //    rc = 1;
+  //    critMsg("Failed to set inferior tty");
+  //  }
 
   if (com.commandF(&resultData, "-file-exec-and-symbols %s", stringToCStr(programPath)) == GDB_ERROR)
   {
@@ -452,16 +443,13 @@ int Core::initCoreDump(Settings* cfg, QString gdbPath, QString programPath, QStr
   // Load the coredump file
   com.commandF(&resultData, "-target-select core %s", stringToCStr(coreDumpFile));
 
-  // TODO: mundak
-  Q_ASSERT(false);
+  // TODO mundak: program output is not supported right now
   // QString ptsDevPath = ptsname(m_ptsFd);
-  QString ptsDevPath;
-
-  if (com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
-  {
-    rc = 1;
-    critMsg("Failed to set inferior tty");
-  }
+  //  if (com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
+  //  {
+  //    rc = 1;
+  //    critMsg("Failed to set inferior tty");
+  //  }
 
   // Get memory depth (32 or 64)
   detectMemoryDepth();
@@ -527,45 +515,42 @@ int Core::initRemote(Settings* cfg, QString gdbPath, QString programPath, QStrin
  */
 void Core::writeTargetStdin(QString text)
 {
-  QByteArray rawData = text.toLocal8Bit();
-  int bytesWritten = 0;
-  int n;
-  do
-  {
-    // TODO: mundak: fix
-    Q_ASSERT(false);
-    // n = write(m_ptsFd, rawData.constData()+bytesWritten, rawData.size()-bytesWritten);
-    if (n > 0)
-      bytesWritten += n;
-    else if (n < 0)
-      errorMsg("Failed to write data to target stdin");
-  } while (n > 0 && bytesWritten != rawData.size());
-  // TODO: mundak: fix
-  Q_ASSERT(false);
-  // fsync(m_ptsFd);
+  // TODO mundak: program output is not supported right now
+  //
+  //  QByteArray rawData = text.toLocal8Bit();
+  //  int bytesWritten = 0;
+  //  int n;
+  //  do
+  //  {
+  //    n = write(m_ptsFd, rawData.constData() + bytesWritten, rawData.size() - bytesWritten);
+  //    if (n > 0)
+  //      bytesWritten += n;
+  //    else if (n < 0)
+  //      errorMsg("Failed to write data to target stdin");
+  //  } while (n > 0 && bytesWritten != rawData.size());
+  //
+  //  fsync(m_ptsFd);
 }
 
 void Core::onGdbOutput(int socketFd)
 {
   Q_UNUSED(socketFd);
-  char buff[128];
-  buff[0] = '\0';
-  // TODO: mundak
-  Q_ASSERT(false);
-  // int n =  read(m_ptsFd, buff, sizeof(buff)-1);
-  int n = 0;
-  if (n > 0)
-  {
-    buff[n] = '\0';
-
-    QString str = QString::fromUtf8(buff);
-    m_inf->ICore_onTargetOutput(str);
-  }
-  else
-  {
-    delete m_ptsListener;
-    m_ptsListener = NULL;
-  }
+  // TODO mundak: program output is not supported right now
+  //  char buff[128];
+  //  buff[0] = '\0';
+  //  int n = read(m_ptsFd, buff, sizeof(buff) - 1);
+  //  if (n > 0)
+  //  {
+  //    buff[n] = '\0';
+  //
+  //    QString str = QString::fromUtf8(buff);
+  //    m_inf->ICore_onTargetOutput(str);
+  //  }
+  //  else
+  //  {
+  //    delete m_ptsListener;
+  //    m_ptsListener = NULL;
+  //  }
 }
 
 /**
@@ -720,11 +705,11 @@ void Core::gdbRun()
     return;
   }
 
-  //
+  // TODO mundak: program output is not supported right now
   if (m_ptsListener)
     delete m_ptsListener;
-  m_ptsListener = new QSocketNotifier(m_ptsFd, QSocketNotifier::Read);
-  connect(m_ptsListener, SIGNAL(activated(int)), this, SLOT(onGdbOutput(int)));
+  //  m_ptsListener = new QSocketNotifier(m_ptsFd, QSocketNotifier::Read);
+  //  connect(m_ptsListener, SIGNAL(activated(int)), this, SLOT(onGdbOutput(int)));
 
   m_pid = 0;
   oldState = m_targetState;
