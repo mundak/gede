@@ -9,47 +9,42 @@
 #ifndef FILE__GOTODIALOG_H
 #define FILE__GOTODIALOG_H
 
+#include "locator.h"
+#include "settings.h"
+#include "ui_gotodialog.h"
+
 #include <QDialog>
 #include <QVector>
 
-#include "ui_gotodialog.h"
-
-#include "settings.h"
-#include "locator.h"
-
 class GoToDialog : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
+  GoToDialog(QWidget* parent, Locator* locator, Settings* cfg, QString currentFilename);
+  virtual ~GoToDialog();
 
-    GoToDialog(QWidget *parent, Locator *locator, Settings *cfg, QString currentFilename);
-    virtual ~GoToDialog();
+  void getSelection(QString* filename, int* lineno);
 
-    void getSelection(QString *filename, int *lineno);
-
-    void saveSettings(Settings *cfg);
+  void saveSettings(Settings* cfg);
 
 public slots:
-    void onGo();
-    void onSearchTextEdited( const QString & text );
-    void onItemClicked ( QListWidgetItem * item );
+  void onGo();
+  void onSearchTextEdited(const QString& text);
+  void onItemClicked(QListWidgetItem* item);
 
 private:
-    void showListWidget(bool show );
-    bool eventFilter(QObject *obj, QEvent *event);
+  void showListWidget(bool show);
+  bool eventFilter(QObject* obj, QEvent* event);
 
-    void onComboBoxTabKey();
-    QString getCurrentLineEditText();
-    QString cleanupLinEditText(QString rawText);
+  void onComboBoxTabKey();
+  QString getCurrentLineEditText();
+  QString cleanupLinEditText(QString rawText);
 
-    
 private:
-
-    Ui_GoToDialog m_ui;
-    QString m_currentFilename;
-    Locator *m_locator;
-    
+  Ui_GoToDialog m_ui;
+  QString m_currentFilename;
+  Locator* m_locator;
 };
 
 #endif // FILE__GOTODIALOG_H

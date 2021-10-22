@@ -9,67 +9,63 @@
 #ifndef WATCHVAR_CTL_H
 #define WATCHVAR_CTL_H
 
-#include <QString>
-#include <QTreeWidget>
-#include <QMenu>
-#include <QKeyEvent>
-
-
 #include "core.h"
 #include "varctl.h"
 
+#include <QKeyEvent>
+#include <QMenu>
+#include <QString>
+#include <QTreeWidget>
 
 class WatchVarCtl : public VarCtl
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    WatchVarCtl();
-    
-    void setWidget(QTreeWidget *varWidget);
+  WatchVarCtl();
 
-    void ICore_onWatchVarChanged(VarWatch &watch);
-    void ICore_onWatchVarChildAdded(VarWatch &watch);
-    void ICore_onWatchVarDeleted(VarWatch &watch);
-    
-    void addNewWatch(QString varName);
-    void deleteSelected();
+  void setWidget(QTreeWidget* varWidget);
 
-    void onKeyPress(QKeyEvent *keyEvent);
+  void ICore_onWatchVarChanged(VarWatch& watch);
+  void ICore_onWatchVarChildAdded(VarWatch& watch);
+  void ICore_onWatchVarDeleted(VarWatch& watch);
+
+  void addNewWatch(QString varName);
+  void deleteSelected();
+
+  void onKeyPress(QKeyEvent* keyEvent);
 
 private:
-    QString getWatchId(QTreeWidgetItem* item);
+  QString getWatchId(QTreeWidgetItem* item);
 
-    void selectedChangeDisplayFormat(VarCtl::DispFormat fmt);
+  void selectedChangeDisplayFormat(VarCtl::DispFormat fmt);
 
-    QString getDisplayString(QString watchId);
-    
-    void sync(QTreeWidgetItem * parentItem, VarWatch &watch);
-    QTreeWidgetItem* priv_findItemByWatchId(QString watchId);
-    
+  QString getDisplayString(QString watchId);
+
+  void sync(QTreeWidgetItem* parentItem, VarWatch& watch);
+  QTreeWidgetItem* priv_findItemByWatchId(QString watchId);
+
 public slots:
-    void onWatchWidgetItemDoubleClicked(QTreeWidgetItem *item, int column);
-    void onWatchWidgetCurrentItemChanged ( QTreeWidgetItem * current, int column );
-    void onWatchWidgetItemExpanded(QTreeWidgetItem *item );
-    void onWatchWidgetItemCollapsed(QTreeWidgetItem *item);
+  void onWatchWidgetItemDoubleClicked(QTreeWidgetItem* item, int column);
+  void onWatchWidgetCurrentItemChanged(QTreeWidgetItem* current, int column);
+  void onWatchWidgetItemExpanded(QTreeWidgetItem* item);
+  void onWatchWidgetItemCollapsed(QTreeWidgetItem* item);
 
-    void onContextMenu ( const QPoint &pos);
+  void onContextMenu(const QPoint& pos);
 
-
-    void onDisplayAsDec();
-    void onDisplayAsHex();
-    void onDisplayAsBin();
-    void onDisplayAsChar();
-    void onRemoveWatch();
-
-private:
-    void fillInVars();
+  void onDisplayAsDec();
+  void onDisplayAsHex();
+  void onDisplayAsBin();
+  void onDisplayAsChar();
+  void onRemoveWatch();
 
 private:
-    QTreeWidget *m_varWidget;
-    VarCtl::DispInfoMap m_watchVarDispInfo;
-    QMenu m_popupMenu;
+  void fillInVars();
 
+private:
+  QTreeWidget* m_varWidget;
+  VarCtl::DispInfoMap m_watchVarDispInfo;
+  QMenu m_popupMenu;
 };
 
 #endif // WATCHVAR_CTL_H

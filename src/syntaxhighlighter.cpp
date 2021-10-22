@@ -6,6 +6,4 @@
  * of the BSD license.  See the LICENSE file for details.
  */
 
-
 #include "syntaxhighlighter.h"
-

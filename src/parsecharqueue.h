@@ -14,20 +14,17 @@
 class ParseCharQueue
 {
 public:
+  ParseCharQueue(QString str);
+  virtual ~ParseCharQueue();
 
-    ParseCharQueue(QString str);
-    virtual ~ParseCharQueue();
+  QChar popNext(bool* isEscaped = NULL);
+  void revertPop();
+  bool isEmpty();
 
-    QChar popNext(bool *isEscaped = NULL);
-    void revertPop();
-    bool isEmpty();
-    
 private:
-    QString m_list;
-    int m_idx;
-    bool m_isEscMode;
+  QString m_list;
+  int m_idx;
+  bool m_isEscMode;
 };
 
-
 #endif // FILE__STRINGQUEUE_H
-

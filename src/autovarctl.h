@@ -9,80 +9,74 @@
 #ifndef FILE__AUTO_VAR_CTL_H
 #define FILE__AUTO_VAR_CTL_H
 
+#include "core.h"
+#include "settings.h"
+#include "varctl.h"
+
+#include <QKeyEvent>
+#include <QMenu>
 #include <QString>
 #include <QTreeWidget>
-#include <QMenu>
-#include <QKeyEvent>
-
-
-#include "core.h"
-#include "varctl.h"
-#include "settings.h"
 
 /**
-* @brief Displays local variables (on the stack).
-*/
+ * @brief Displays local variables (on the stack).
+ */
 class AutoVarCtl : public VarCtl
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    AutoVarCtl();
-    
-    void setWidget(QTreeWidget *autoWidget);
+  AutoVarCtl();
 
-    void ICore_onWatchVarChanged(VarWatch &watch);
-    void ICore_onWatchVarChildAdded(VarWatch &watch);
-    void ICore_onWatchVarDeleted(VarWatch &watch);
-    void addNewWatch(QString varName);
+  void setWidget(QTreeWidget* autoWidget);
 
+  void ICore_onWatchVarChanged(VarWatch& watch);
+  void ICore_onWatchVarChildAdded(VarWatch& watch);
+  void ICore_onWatchVarDeleted(VarWatch& watch);
+  void addNewWatch(QString varName);
 
-    void setConfig(Settings *cfg);
+  void setConfig(Settings* cfg);
 
-    void ICore_onLocalVarChanged(QStringList varNames);
+  void ICore_onLocalVarChanged(QStringList varNames);
 
-    void onKeyPress(QKeyEvent *keyEvent);
+  void onKeyPress(QKeyEvent* keyEvent);
 
-    void ICore_onStateChanged(ICore::TargetState state);
+  void ICore_onStateChanged(ICore::TargetState state);
+
 private:
-    QTreeWidgetItem* priv_findItemByWatchId(QString watchId);
-    quint64 getAddress(VarWatch &w);
-    QString getWatchId(QTreeWidgetItem* item);
+  QTreeWidgetItem* priv_findItemByWatchId(QString watchId);
+  quint64 getAddress(VarWatch& w);
+  QString getWatchId(QTreeWidgetItem* item);
 
-    void selectedChangeDisplayFormat(VarCtl::DispFormat fmt);
-    QString getTreeWidgetItemPath(QTreeWidgetItem *item);
+  void selectedChangeDisplayFormat(VarCtl::DispFormat fmt);
+  QString getTreeWidgetItemPath(QTreeWidgetItem* item);
 
-    QString getDisplayString(QString watchId, QString varPath);
-    
-    
+  QString getDisplayString(QString watchId, QString varPath);
+
 public slots:
-    void onAutoWidgetItemDoubleClicked(QTreeWidgetItem *item, int column);
-    void onAutoWidgetCurrentItemChanged ( QTreeWidgetItem * current, int column );
-    void onAutoWidgetItemExpanded(QTreeWidgetItem *item );
-    void onAutoWidgetItemCollapsed(QTreeWidgetItem *item);
+  void onAutoWidgetItemDoubleClicked(QTreeWidgetItem* item, int column);
+  void onAutoWidgetCurrentItemChanged(QTreeWidgetItem* current, int column);
+  void onAutoWidgetItemExpanded(QTreeWidgetItem* item);
+  void onAutoWidgetItemCollapsed(QTreeWidgetItem* item);
 
-    void onContextMenu ( const QPoint &pos);
-    void onShowMemory();
+  void onContextMenu(const QPoint& pos);
+  void onShowMemory();
 
-
-    void onDisplayAsDec();
-    void onDisplayAsHex();
-    void onDisplayAsBin();
-    void onDisplayAsChar();
-
-private:
-    void clear();
+  void onDisplayAsDec();
+  void onDisplayAsHex();
+  void onDisplayAsBin();
+  void onDisplayAsChar();
 
 private:
-    QTreeWidget *m_autoWidget;
-    QMenu m_popupMenu;
-    
-    VarCtl::DispInfoMap m_autoVarDispInfo;
-    Settings m_cfg;
-    QColor m_textColor; //!< Color to use for text in the widget
+  void clear();
+
+private:
+  QTreeWidget* m_autoWidget;
+  QMenu m_popupMenu;
+
+  VarCtl::DispInfoMap m_autoVarDispInfo;
+  Settings m_cfg;
+  QColor m_textColor; //!< Color to use for text in the widget
 };
 
-
-
 #endif // FILE__AUTO_VAR_CTL_H
-

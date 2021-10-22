@@ -9,28 +9,22 @@
 #ifndef FILE__ABOUTDIALOG_H
 #define FILE__ABOUTDIALOG_H
 
-#include <QDialog>
-
 #include "settings.h"
 #include "ui_aboutdialog.h"
 
+#include <QDialog>
 
 class AboutDialog : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-
-    AboutDialog(QWidget *parent, Settings *cfg);
-
+  AboutDialog(QWidget* parent, Settings* cfg);
 
 private:
-    QString getGdbVersion(QString gdbPath);
+  QString getGdbVersion(QString gdbPath);
 
-
-    Ui_AboutDialog m_ui;
-    
+  Ui_AboutDialog m_ui;
 };
 
 #endif // FILE__ABOUTDIALOG_H
-

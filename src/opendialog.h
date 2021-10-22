@@ -9,79 +9,74 @@
 #ifndef FILE__OPENDIALOG_H
 #define FILE__OPENDIALOG_H
 
-#include <QDialog>
-
-#include "settings.h"
 #include "core.h"
+#include "settings.h"
 #include "ui_opendialog.h"
 
+#include <QDialog>
 
 class OpenDialog : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
+  OpenDialog(QWidget* parent);
 
-    OpenDialog(QWidget *parent);
+  void setProgram(QString program);
+  void setArguments(QString program);
+  QString getProgram();
+  QString getArguments();
 
-    void setProgram(QString program);
-    void setArguments(QString program);
-    QString getProgram();
-    QString getArguments();
+  QString getCoreDumpFile();
 
-    QString getCoreDumpFile();
-    
-    void setCoreDumpFile(QString coreDumpFile);
+  void setCoreDumpFile(QString coreDumpFile);
 
-    void setInitialBreakpoint(QString list);
-    QString getInitialBreakpoint();
-    
-    
-    void setTcpRemoteHost(QString host);
-    QString getTcpRemoteHost();
-    
-    void setTcpRemotePort(int port);
-    int getTcpRemotePort();
-    
-    bool getDownload();
-    void setDownload(bool enable);
+  void setInitialBreakpoint(QString list);
+  QString getInitialBreakpoint();
 
-    
-    void setMode(ConnectionMode mode);
-    ConnectionMode getMode();
+  void setTcpRemoteHost(QString host);
+  QString getTcpRemoteHost();
 
-    void setInitCommands(QStringList commandList);
-    QStringList getInitCommands();
+  void setTcpRemotePort(int port);
+  int getTcpRemotePort();
 
-    void setGdbPath(QString path);
-    QString getGdbPath();
+  bool getDownload();
+  void setDownload(bool enable);
 
-    int getRunningPid();
-    void setRunningPid(int pid);
+  void setMode(ConnectionMode mode);
+  ConnectionMode getMode();
 
-    
-    void loadConfig(Settings &cfg);
-    void saveConfig(Settings *cfg);
+  void setInitCommands(QStringList commandList);
+  QStringList getInitCommands();
 
-    QString getProjectDir();
+  void setGdbPath(QString path);
+  QString getGdbPath();
+
+  int getRunningPid();
+  void setRunningPid(int pid);
+
+  void loadConfig(Settings& cfg);
+  void saveConfig(Settings* cfg);
+
+  QString getProjectDir();
+
 private:
-    void onBrowseForProgram(QString *path);
-    
+  void onBrowseForProgram(QString* path);
+
 private slots:
-    void onConnectionTypeLocal(bool checked);
-    void onConnectionTypeTcp(bool checked);
-    void onConnectionTypeCoreDump(bool checked);
-    void onConnectionTypePid(bool checked);
-    
-    void onSelectProgram();
-    void onSelectCoreFile();
-    
-    void onSelectRunningPid();
-    void onProjDirComboChanged(int idx);
+  void onConnectionTypeLocal(bool checked);
+  void onConnectionTypeTcp(bool checked);
+  void onConnectionTypeCoreDump(bool checked);
+  void onConnectionTypePid(bool checked);
+
+  void onSelectProgram();
+  void onSelectCoreFile();
+
+  void onSelectRunningPid();
+  void onProjDirComboChanged(int idx);
 
 private:
-    Ui_OpenDialog m_ui;
-    
+  Ui_OpenDialog m_ui;
 };
 
 #endif // FILE__OPENDIALOG_H

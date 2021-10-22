@@ -4,31 +4,30 @@
 #include <QPushButton>
 
 /**
-* @brief A button used to select colors. Pressing the button triggers a color select dialog.
-*
-* The button will have a square in the selected color drawn on top of the button.
-*/
+ * @brief A button used to select colors. Pressing the button triggers a color select dialog.
+ *
+ * The button will have a square in the selected color drawn on top of the button.
+ */
 class MColorButton : public QPushButton
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
+  MColorButton(QWidget* parent);
+  virtual ~MColorButton();
 
-    MColorButton(QWidget *parent);
-    virtual ~MColorButton();
-
-    void setColor(QColor clr);
-    QColor getColor();
+  void setColor(QColor clr);
+  QColor getColor();
 
 private:
-    virtual void paintEvent ( QPaintEvent * e );
-    void showColorSelectDialog(QColor *color);
+  virtual void paintEvent(QPaintEvent* e);
+  void showColorSelectDialog(QColor* color);
 
 private slots:
-    void onButtonClicked();
-    
+  void onButtonClicked();
+
 private:
-    QColor m_clr;
+  QColor m_clr;
 };
 
 #endif // FILE__COLORBUTTON_H

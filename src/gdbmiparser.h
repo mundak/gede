@@ -9,26 +9,21 @@
 #ifndef FILE__GDBMI_VALUE_PARSER_H
 #define FILE__GDBMI_VALUE_PARSER_H
 
-#include "tree.h"
-#include <QList>
 #include "com.h"
 #include "core.h"
+#include "tree.h"
 
+#include <QList>
 
 class GdbMiParser
 {
-    public:
-    
-    GdbMiParser(){};
+public:
+  GdbMiParser(){};
 
-    static int parseVariableData(CoreVar *var, QList<Token*> *tokenList);
-    static QList<Token*> tokenizeVarString(QString str);
+  static int parseVariableData(CoreVar* var, QList<Token*>* tokenList);
+  static QList<Token*> tokenizeVarString(QString str);
 
-
-    static void setData(CoreVar *var, QString data);
-    
+  static void setData(CoreVar* var, QString data);
 };
 
-
 #endif // FILE__GDBMI_VALUE_PARSER_H
-

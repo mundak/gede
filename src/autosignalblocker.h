@@ -6,23 +6,22 @@
 class AutoSignalBlocker
 {
 private:
-    bool m_signalBlocked;
-    QObject *m_obj;
+  bool m_signalBlocked;
+  QObject* m_obj;
 
 public:
-    AutoSignalBlocker(QObject *obj)
-        :m_obj(obj)
-    {
-         m_signalBlocked = m_obj->blockSignals(true);
-    };
-    virtual ~AutoSignalBlocker()
-    {
-         m_obj->blockSignals(m_signalBlocked);
-    }
+  AutoSignalBlocker(QObject* obj)
+    : m_obj(obj)
+  {
+    m_signalBlocked = m_obj->blockSignals(true);
+  };
+  virtual ~AutoSignalBlocker()
+  {
+    m_obj->blockSignals(m_signalBlocked);
+  }
 
-    private:
-        AutoSignalBlocker(){};
-    
+private:
+  AutoSignalBlocker(){};
 };
 
 #endif

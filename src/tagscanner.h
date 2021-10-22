@@ -9,64 +9,88 @@
 #ifndef FILE_TAGS_H
 #define FILE_TAGS_H
 
-#include <QString>
-#include <QList>
 #include "settings.h"
 
-
+#include <QList>
+#include <QString>
 
 class Tag
 {
-    public:
-        Tag();
-        void dump() const;
+public:
+  Tag();
+  void dump() const;
 
-        QString getName() const { return m_name; };
-        QString getLongName() const;
-        QString getSignature() const { return m_signature; };
-        void setSignature(QString signature) { m_signature = signature; };
-        void setLineNo(int lineNo) { m_lineNo = lineNo;};
-        int getLineNo() const { return m_lineNo; };
-        QString getFilePath() const { return m_filepath; };
-        QString getClassName() const { return m_className;};
-        bool isFunc() const { return (m_type == TAG_FUNC) ? true : false; };
-        bool isClassMember() const { return m_className.isEmpty() ? false : true; };
-          
-        QString m_className;
-        QString m_name;
-        QString m_filepath;
-        enum { TAG_FUNC, TAG_VARIABLE} m_type;
+  QString getName() const
+  {
+    return m_name;
+  };
+  QString getLongName() const;
+  QString getSignature() const
+  {
+    return m_signature;
+  };
+  void setSignature(QString signature)
+  {
+    m_signature = signature;
+  };
+  void setLineNo(int lineNo)
+  {
+    m_lineNo = lineNo;
+  };
+  int getLineNo() const
+  {
+    return m_lineNo;
+  };
+  QString getFilePath() const
+  {
+    return m_filepath;
+  };
+  QString getClassName() const
+  {
+    return m_className;
+  };
+  bool isFunc() const
+  {
+    return (m_type == TAG_FUNC) ? true : false;
+  };
+  bool isClassMember() const
+  {
+    return m_className.isEmpty() ? false : true;
+  };
+
+  QString m_className;
+  QString m_name;
+  QString m_filepath;
+  enum
+  {
+    TAG_FUNC,
+    TAG_VARIABLE
+  } m_type;
+
 private:
-        QString m_signature;
-        int m_lineNo;
+  QString m_signature;
+  int m_lineNo;
 };
-
 
 class TagScanner
 {
-    public:
+public:
+  TagScanner();
+  ~TagScanner();
 
-        TagScanner();
-        ~TagScanner();
+  void init(Settings* cfg);
 
-        void init(Settings *cfg);
+  int scan(QString filepath, QList<Tag>* taglist);
+  void dump(const QList<Tag>& taglist);
 
-        int scan(QString filepath, QList<Tag> *taglist);
-        void dump(const QList<Tag> &taglist);
+private:
+  int parseOutput(QByteArray output, QList<Tag>* taglist);
 
-    private:
-        int parseOutput(QByteArray output, QList<Tag> *taglist);
+  void checkForCtags();
 
-        void checkForCtags();
+  static int execProgram(QString name, QStringList argList, QByteArray* stdoutContent, QByteArray* stderrContent);
 
-    static int execProgram(QString name, QStringList argList,
-                            QByteArray *stdoutContent,
-                            QByteArray *stderrContent);
-
-
-        Settings *m_cfg;
+  Settings* m_cfg;
 };
 
-
 #endif
-

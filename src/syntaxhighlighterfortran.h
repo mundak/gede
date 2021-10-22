@@ -6,61 +6,63 @@
  * of the BSD license.  See the LICENSE file for details.
  */
 
-#ifndef  FILE__SYNTAXHIGHLIGHTERFORTRAN_H
-#define  FILE__SYNTAXHIGHLIGHTERFORTRAN_H
+#ifndef FILE__SYNTAXHIGHLIGHTERFORTRAN_H
+#define FILE__SYNTAXHIGHLIGHTERFORTRAN_H
 
-
-#include <QVector>
-#include <QString>
-#include <QColor>
-#include <QHash>
-
+#include "parsecharqueue.h"
 #include "settings.h"
 #include "syntaxhighlighter.h"
-#include "parsecharqueue.h"
 
+#include <QColor>
+#include <QHash>
+#include <QString>
+#include <QVector>
 
 class SyntaxHighlighterFortran : public SyntaxHighlighter
 {
 public:
-    SyntaxHighlighterFortran();
-    virtual ~SyntaxHighlighterFortran();
-    
-    void colorize(QString text);
-    void colorize(ParseCharQueue text);
+  SyntaxHighlighterFortran();
+  virtual ~SyntaxHighlighterFortran();
 
-    QVector<TextField*> getRow(unsigned int rowIdx);
-    unsigned int getRowCount() { return m_rows.size(); };
-    void reset();
+  void colorize(QString text);
+  void colorize(ParseCharQueue text);
 
-    bool isCppKeyword(QString text) const;
-    bool isKeyword(QString text) const;
-    bool isSpecialChar(char c) const;
-    bool isSpecialChar(TextField *field) const;
-    void setConfig(Settings *cfg);
-    bool isSpecialChar(QChar c) const;
+  QVector<TextField*> getRow(unsigned int rowIdx);
+  unsigned int getRowCount()
+  {
+    return m_rows.size();
+  };
+  void reset();
 
-private:
-    class Row
-    {
-    public:
-        Row();
-
-        TextField *getLastNonSpaceField();
-        void appendField(TextField* field);
-        int getCharCount();
-        
-        bool isCppRow;
-        QVector<TextField*>  m_fields;
-    };
-private:
-    void pickColor(TextField *field);
+  bool isCppKeyword(QString text) const;
+  bool isKeyword(QString text) const;
+  bool isSpecialChar(char c) const;
+  bool isSpecialChar(TextField* field) const;
+  void setConfig(Settings* cfg);
+  bool isSpecialChar(QChar c) const;
 
 private:
-    Settings *m_cfg;
-    QVector <Row*> m_rows;
-    QHash <QString, bool> m_keywords;
-    QHash <QString, bool> m_cppKeywords;
+  class Row
+  {
+  public:
+    Row();
+
+    TextField* getLastNonSpaceField();
+    void appendField(TextField* field);
+    int getCharCount();
+
+    bool isCppRow;
+    QVector<TextField*> m_fields;
+  };
+
+private:
+  void pickColor(TextField* field);
+
+private:
+  Settings* m_cfg;
+  QVector<Row*> m_rows;
+  QHash<QString, bool> m_keywords;
+  QHash<QString, bool> m_cppKeywords;
 };
 
 #endif // #ifndef FILE__SYNTAXHIGHLIGHTER_H

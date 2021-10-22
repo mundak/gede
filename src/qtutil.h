@@ -12,9 +12,4 @@
 
 bool isInteger(QString str);
 
-
 #endif
-
-
-
-

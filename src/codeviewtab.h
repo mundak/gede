@@ -9,57 +9,76 @@
 #ifndef FILE__CODEVIEWTAB_H
 #define FILE__CODEVIEWTAB_H
 
+#include "tagscanner.h"
 #include "ui_codeviewtab.h"
 
-#include "tagscanner.h"
-#include <QWidget>
 #include <QTime>
+#include <QWidget>
 
 class CodeViewTab : public QWidget
 {
-Q_OBJECT
+  Q_OBJECT
 
 public:
-    CodeViewTab(QWidget *parent);
-    virtual ~CodeViewTab();
+  CodeViewTab(QWidget* parent);
+  virtual ~CodeViewTab();
 
-    void ensureLineIsVisible(int lineIdx);
-    
-    void setConfig(Settings *cfg);
-    void disableCurrentLine();
-    
-    void setCurrentLine(int currentLine);
-                    
-    int incSearchStart(QString text) { return m_ui.codeView->incSearchStart(text); };
-    int incSearchNext() { return m_ui.codeView->incSearchNext(); };
-    int incSearchPrev() { return m_ui.codeView->incSearchPrev(); };
-    void clearIncSearch() { m_ui.codeView->clearIncSearch(); };
-    
-    int open(QString filename, QList<Tag> tagList);
+  void ensureLineIsVisible(int lineIdx);
 
-    void setInterface(ICodeView *inf);
-    
-    void setBreakpoints(const QVector<int> &numList);
+  void setConfig(Settings* cfg);
+  void disableCurrentLine();
 
-    QString getFilePath() { return m_filepath; };
+  void setCurrentLine(int currentLine);
 
-    void updateLastAccessStamp() { m_lastOpened = QTime::currentTime(); };
-    QTime getLastAccessTime() { return m_lastOpened; };
+  int incSearchStart(QString text)
+  {
+    return m_ui.codeView->incSearchStart(text);
+  };
+  int incSearchNext()
+  {
+    return m_ui.codeView->incSearchNext();
+  };
+  int incSearchPrev()
+  {
+    return m_ui.codeView->incSearchPrev();
+  };
+  void clearIncSearch()
+  {
+    m_ui.codeView->clearIncSearch();
+  };
+
+  int open(QString filename, QList<Tag> tagList);
+
+  void setInterface(ICodeView* inf);
+
+  void setBreakpoints(const QVector<int>& numList);
+
+  QString getFilePath()
+  {
+    return m_filepath;
+  };
+
+  void updateLastAccessStamp()
+  {
+    m_lastOpened = QTime::currentTime();
+  };
+  QTime getLastAccessTime()
+  {
+    return m_lastOpened;
+  };
+
 private:
-    
-    void fillInFunctions(QList<Tag> tagList);
+  void fillInFunctions(QList<Tag> tagList);
 
 public slots:
-    void onFuncListItemActivated(int index);
+  void onFuncListItemActivated(int index);
 
 private:
-    Ui_CodeViewTab m_ui;
-    QString m_filepath;
-    Settings *m_cfg;
-    QList<Tag> m_tagList;
-    QTime m_lastOpened; //!< When the tab was last accessed
+  Ui_CodeViewTab m_ui;
+  QString m_filepath;
+  Settings* m_cfg;
+  QList<Tag> m_tagList;
+  QTime m_lastOpened; //!< When the tab was last accessed
 };
 
 #endif
-
-

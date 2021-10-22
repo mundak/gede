@@ -9,6 +9,3 @@
 #include "varctl.h"
 
 #include <assert.h>
-
-
-
