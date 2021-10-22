@@ -1087,17 +1087,11 @@ int GdbCom::init(QString gdbPath, bool enableDebugLog)
     writeLogEntry(logStr);
   }
 
-  // Make sure that gdb understands that we can handle color output
-  // TODO: mundak
-  // setenv("TERM", "xterm",1);
-  Q_ASSERT(false);
-
   m_process.start(commandLine);
   m_process.waitForStarted(6000);
 
   if (m_process.state() == QProcess::NotRunning)
   {
-    assert(0);
     return 1;
   }
 

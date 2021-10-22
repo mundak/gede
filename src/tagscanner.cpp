@@ -162,7 +162,8 @@ void TagScanner::init(Settings* cfg)
 {
   m_cfg = cfg;
 
-  checkForCtags();
+  // TODO mundak: don't use ctags for now
+  //  checkForCtags();
 }
 
 /**
