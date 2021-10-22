@@ -1,0 +1,13 @@
+.vs
+*.tlog
+*.recipe
+*.log
+*.obj
+*.filters
+*.user
+*.iobj
+*.ipdb
+vc142.pdb
+*.db
+/cmake-build-*
+/.idea
