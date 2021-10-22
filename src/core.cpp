@@ -14,14 +14,11 @@
 #include <QDebug>
 #include <QFileInfo>
 
-#include <unistd.h>
 #include <assert.h>
 #include <signal.h>
 #include <stdlib.h> // posix_openpt()
 #include <fcntl.h> //  O_RDWR
 #include <ctype.h>
-#include <termios.h>
-#include <sys/ioctl.h>
 #include <string.h>
 #include <errno.h>
 
@@ -197,32 +194,37 @@ QString CoreVar::getData(DispFormat fmt) const
     
 int Core::openPseudoTerminal()
 {
-    int ptsFd = posix_openpt(O_RDWR | O_NOCTTY);
-   
-    if(grantpt(ptsFd))
-        critMsg("Failed to grantpt");
-    if(unlockpt(ptsFd))
-        critMsg("Failed to unlock pt");
+    // TODO:
+    Q_ASSERT(false);
+    return 0;
 
-    // Set window size
-    struct winsize term_winsize;
-    term_winsize.ws_col = 80;
-    term_winsize.ws_row = 20;
-    term_winsize.ws_xpixel = 80 * 8;
-    term_winsize.ws_ypixel = 20 * 8;
-    if(ioctl(ptsFd, TIOCSWINSZ, &term_winsize) < 0)
-    {
-        errorMsg("ioctl TIOCSWINSZ failed (%s)", strerror(errno));
-    }
-
-/*
-    // Set controlling
-    if (ioctl(ptsFd, TIOCSCTTY, (char *)0) < 0)
-    {
-        errorMsg("ioctl TIOCSCTTY failed (%s)", strerror(errno));
-    }
-*/
-    return ptsFd;
+//    int ptsFd = posix_openpt(O_RDWR | O_NOCTTY);
+//
+//
+//    if(grantpt(ptsFd))
+//        critMsg("Failed to grantpt");
+//    if(unlockpt(ptsFd))
+//        critMsg("Failed to unlock pt");
+//
+//    // Set window size
+//    struct winsize term_winsize;
+//    term_winsize.ws_col = 80;
+//    term_winsize.ws_row = 20;
+//    term_winsize.ws_xpixel = 80 * 8;
+//    term_winsize.ws_ypixel = 20 * 8;
+//    if(ioctl(ptsFd, TIOCSWINSZ, &term_winsize) < 0)
+//    {
+//        errorMsg("ioctl TIOCSWINSZ failed (%s)", strerror(errno));
+//    }
+//
+///*
+//    // Set controlling
+//    if (ioctl(ptsFd, TIOCSCTTY, (char *)0) < 0)
+//    {
+//        errorMsg("ioctl TIOCSCTTY failed (%s)", strerror(errno));
+//    }
+//*/
+//    return ptsFd;
 }
 
 
@@ -250,9 +252,9 @@ Core::Core()
 
 
 
-
-    infoMsg("Using: %s", ptsname(m_ptsFd));
-    
+    // TODO: mundak: fix
+    Q_ASSERT(false);
+    //infoMsg("Using: %s", ptsname(m_ptsFd));
 
 }
 
@@ -271,7 +273,9 @@ Core::~Core()
     GdbCom& com = GdbCom::getInstance();
     com.setListener(NULL);
 
-    close(m_ptsFd);
+    // TODO: mundak: fix
+    Q_ASSERT(false);
+    //close(m_ptsFd);
 
     for(int m = 0;m < m_sourceFiles.size();m++)
     {
@@ -329,8 +333,11 @@ int Core::initPid(Settings *cfg, QString gdbPath, QString programPath, int pid)
         critMsg("Failed to start gdb ('%s')", stringToCStr(gdbPath));
         return -1;
     }
-    
-    QString ptsDevPath = ptsname(m_ptsFd);
+
+    // TODO: mundak: fix
+    //QString ptsDevPath = ptsname(m_ptsFd);
+    QString ptsDevPath = "";
+    Q_ASSERT(false);
     
     if(com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
     {
@@ -405,9 +412,12 @@ int Core::initLocal(Settings *cfg, QString gdbPath, QString programPath, QString
         critMsg("Failed to start gdb ('%s')", stringToCStr(gdbPath));
         return -1;
     }
-    
-    QString ptsDevPath = ptsname(m_ptsFd);
-    
+
+    // TODO: mundak: fix
+    Q_ASSERT(false);
+    //QString ptsDevPath = ptsname(m_ptsFd);
+    QString ptsDevPath = "";
+
     if(com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
     {
         rc = 1;
@@ -475,10 +485,13 @@ int Core::initCoreDump(Settings *cfg, QString gdbPath, QString programPath, QStr
     }
 
     // Load the coredump file
-    com.commandF(&resultData, "-target-select core %s", stringToCStr(coreDumpFile)); 
+    com.commandF(&resultData, "-target-select core %s", stringToCStr(coreDumpFile));
 
-    
-    QString ptsDevPath = ptsname(m_ptsFd);
+
+    // TODO: mundak
+    Q_ASSERT(false);
+    //QString ptsDevPath = ptsname(m_ptsFd);
+    QString ptsDevPath;
     
     if(com.commandF(&resultData, "-inferior-tty-set %s", stringToCStr(ptsDevPath)))
     {
@@ -561,13 +574,17 @@ void Core::writeTargetStdin(QString text)
     int n;
     do
     {
-        n = write(m_ptsFd, rawData.constData()+bytesWritten, rawData.size()-bytesWritten);
+        // TODO: mundak: fix
+        Q_ASSERT(false);
+        // n = write(m_ptsFd, rawData.constData()+bytesWritten, rawData.size()-bytesWritten);
         if(n > 0)
             bytesWritten += n;
         else if(n < 0)
             errorMsg("Failed to write data to target stdin");
     }while(n > 0 && bytesWritten != rawData.size());
-    fsync(m_ptsFd);
+    // TODO: mundak: fix
+    Q_ASSERT(false);
+    // fsync(m_ptsFd);
 }
 
 void Core::onGdbOutput(int socketFd)
@@ -575,7 +592,10 @@ void Core::onGdbOutput(int socketFd)
     Q_UNUSED(socketFd);
     char buff[128];
     buff[0] = '\0';
-    int n =  read(m_ptsFd, buff, sizeof(buff)-1);
+    // TODO: mundak
+    Q_ASSERT(false);
+    // int n =  read(m_ptsFd, buff, sizeof(buff)-1);
+    int n = 0;
     if(n > 0)
     {
         buff[n] = '\0';
@@ -847,7 +867,9 @@ void Core::stop()
         if(gdbPid != 0)
         {
             debugMsg("Sending SIGINT to %d", gdbPid);
-            kill(gdbPid, SIGINT);
+            // TODO: mundak: fix
+            Q_ASSERT(false);
+            // kill(gdbPid, SIGINT);
         }
         else
         {
@@ -864,7 +886,9 @@ void Core::stop()
         if(m_pid != 0)
         {
             debugMsg("sending SIGINT to %d\n", m_pid);
-            kill(m_pid, SIGINT);
+            // TODO: mundak: fix
+            Q_ASSERT(false);
+            // kill(m_pid, SIGINT);
         }
         else
             critMsg("Failed to stop since PID not known");

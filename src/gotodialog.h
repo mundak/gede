@@ -52,5 +52,4 @@ private:
     
 };
 
-#endif // FILE__ABOUTDIALOG_H
-
+#endif // FILE__GOTODIALOG_H

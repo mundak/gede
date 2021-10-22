@@ -11,9 +11,7 @@
 #include <QDateTime>
 #include <QByteArray>
 #include <QDebug>
-#include <unistd.h>
 #include <assert.h>
-#include <sys/time.h>
 
 #include "log.h"
 #include "util.h"
@@ -819,11 +817,13 @@ void GdbCom::writeLogEntry(QString logText)
 {
     assert(m_enableLog == true);
 
-    // 
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    QString timeStr;
-    timeStr.sprintf("%02d.%03d", (int)(tv.tv_sec%100), (int)(tv.tv_usec/1000));
+    // TODO: mundak
+    //struct timeval tv;
+    //gettimeofday(&tv, NULL);
+    //QString timeStr;
+    //timeStr.sprintf("%02d.%03d", (int)(tv.tv_sec%100), (int)(tv.tv_usec/1000));
+    Q_ASSERT(false);
+    QString timeStr = "";
     
     QString fullText = timeStr + "|" + logText;
     
@@ -1107,7 +1107,9 @@ int GdbCom::init(QString gdbPath, bool enableDebugLog)
     }
 
     // Make sure that gdb understands that we can handle color output
-    setenv("TERM", "xterm",1);
+    // TODO: mundak
+    //setenv("TERM", "xterm",1);
+    Q_ASSERT(false);
 
     m_process.start(commandLine);
     m_process.waitForStarted(6000);
@@ -1124,7 +1126,10 @@ int GdbCom::init(QString gdbPath, bool enableDebugLog)
 
 int GdbCom::getPid()
 {
-    return m_process.pid();
+    // TODO: mundak
+    Q_ASSERT(false);
+    //return m_process.pid();
+    return 0;
 }
 
 

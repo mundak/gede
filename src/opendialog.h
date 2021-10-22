@@ -6,8 +6,8 @@
  * of the BSD license.  See the LICENSE file for details.
  */
 
-#ifndef FILE__ABOUTDIALOG_H
-#define FILE__ABOUTDIALOG_H
+#ifndef FILE__OPENDIALOG_H
+#define FILE__OPENDIALOG_H
 
 #include <QDialog>
 
@@ -84,5 +84,4 @@ private:
     
 };
 
-#endif // FILE__ABOUTDIALOG_H
-
+#endif // FILE__OPENDIALOG_H

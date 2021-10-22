@@ -17,7 +17,6 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
 
 #include "version.h"
 #include "util.h"
@@ -98,7 +97,9 @@ QList<ProcessInfo> getProcessListByUser(int ownerUid)
                          ProcessInfo prc;
                          prc.uid = buf.st_uid;
                          prc.pid = pid;
-                         prc.mtime.setTime_t(buf.st_mtim.tv_sec);
+                         // TODO: mundak
+                         Q_ASSERT(false);
+                         // prc.mtime.setTime_t(buf.st_mtim.tv_sec);
                          prc.m_exePath = procDirPath + "/exe";
                          QFile f(prc.m_exePath);
                          prc.m_exePath = f.symLinkTarget();
@@ -134,7 +135,9 @@ QList<ProcessInfo> getProcessListAllUsers()
 
 QList<ProcessInfo> getProcessListThisUser()
 {
-    return getProcessListByUser(getuid());
+    // TODO: mundak
+    // return getProcessListByUser(getuid());
+    return QList<ProcessInfo>();
 }
 
 //---------------------------------------------------------------------------
